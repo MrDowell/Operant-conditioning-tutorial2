@@ -1,0 +1,734 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Psychology: Operant Conditioning Tutorial</title>
+<style>
+  :root {
+    --navy: #17365d;
+    --blue: #2463a6;
+    --light: #eef4fa;
+    --green: #237a45;
+    --red: #a83232;
+    --gold: #a66b00;
+    --text: #202b38;
+    --muted: #5b6875;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 18px;
+    background: #f3f6fa;
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+  }
+  .container {
+    max-width: 850px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 14px;
+    padding: 26px;
+    box-shadow: 0 3px 16px rgba(0,0,0,.08);
+  }
+  h1 { color: var(--navy); margin-top: 0; }
+  h2 { color: var(--navy); }
+  .subtitle { color: var(--muted); margin-top: -8px; }
+  .progress-wrap {
+    background: #e5eaf0;
+    height: 12px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 18px 0 8px;
+  }
+  .progress-bar {
+    background: var(--blue);
+    height: 100%;
+    width: 0%;
+    transition: width .25s;
+  }
+  .progress-label { color: var(--muted); font-size: .9rem; }
+  .question-number {
+    color: var(--blue);
+    font-weight: bold;
+    margin-top: 22px;
+  }
+  .question {
+    font-size: 1.18rem;
+    font-weight: bold;
+    margin: 10px 0 18px;
+  }
+  .option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px 16px;
+    margin: 10px 0;
+    border: 2px solid #d5dce5;
+    border-radius: 9px;
+    background: white;
+    color: var(--text);
+    font-size: 1rem;
+    cursor: pointer;
+    min-height: 52px;
+  }
+  .option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: var(--light);
+  }
+  .option:disabled { cursor: default; opacity: .7; }
+  .option.correct {
+    border-color: var(--green);
+    background: #eaf6ee;
+    opacity: 1;
+  }
+  .option.incorrect {
+    border-color: var(--red);
+    background: #faeeee;
+    opacity: 1;
+  }
+  .feedback {
+    display: none;
+    margin: 18px 0;
+    padding: 16px;
+    border-radius: 9px;
+    background: var(--light);
+    border-left: 5px solid var(--blue);
+  }
+  .feedback.good {
+    background: #eaf6ee;
+    border-color: var(--green);
+  }
+  .feedback.try-again {
+    background: #fff5e5;
+    border-color: var(--gold);
+  }
+  .feedback h3 { margin: 0 0 6px; }
+  .button {
+    display: inline-block;
+    border: 0;
+    border-radius: 8px;
+    background: var(--blue);
+    color: white;
+    padding: 13px 21px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px 8px 4px 0;
+  }
+  .button:hover { background: var(--navy); }
+  .button.secondary { background: #647487; }
+  .button.green { background: var(--green); }
+  .button:focus, .option:focus {
+    outline: 3px solid #f0bd4d;
+    outline-offset: 2px;
+  }
+  .hidden { display: none !important; }
+  .callout {
+    background: var(--light);
+    border-radius: 9px;
+    padding: 16px;
+    margin: 18px 0;
+  }
+  .score {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  .report-item {
+    padding: 12px;
+    border-bottom: 1px solid #e1e6ec;
+  }
+  .tag {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 3px 9px;
+    font-size: .8rem;
+    background: #e8edf3;
+    margin: 3px;
+  }
+  .small { font-size: .9rem; color: var(--muted); }
+  @media (max-width: 600px) {
+    body { padding: 8px; }
+    .container { padding: 17px; border-radius: 9px; }
+    h1 { font-size: 1.55rem; }
+    .question { font-size: 1.08rem; }
+    .option { padding: 13px; }
+    .button { width: 100%; margin: 7px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>AP Psychology: Operant Conditioning</h1>
+  <p class="subtitle">Practice reinforcement, punishment, and the effects of consequences on behavior.</p>
+
+  <section id="intro">
+    <h2>Welcome!</h2>
+    <p>This tutorial will help you practice identifying the four types of operant conditioning.</p>
+    <div class="callout">
+      <strong>Remember these two questions:</strong>
+      <ol>
+        <li>Does the consequence make the behavior increase or decrease?</li>
+        <li>Is something added or taken away?</li>
+      </ol>
+      <p><strong>Reinforcement</strong> increases a behavior. <strong>Punishment</strong> decreases a behavior.</p>
+      <p><strong>Positive</strong> means something is added. <strong>Negative</strong> means something is removed.</p>
+    </div>
+    <p>You will first complete 15 core questions. Your first answers determine your core score. If you miss questions, you may receive additional practice focused on the concepts you need to review.</p>
+    <button class="button" id="startButton">Start the tutorial</button>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="progress-label" id="progressLabel"></div>
+    <div class="question-number" id="questionNumber"></div>
+    <div class="question" id="questionText"></div>
+    <div id="options"></div>
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+    <button class="button hidden" id="nextButton">Continue</button>
+  </section>
+
+  <section id="transition" class="hidden">
+    <h2 id="transitionTitle"></h2>
+    <div id="transitionText"></div>
+    <button class="button green" id="practiceButton">Begin targeted practice</button>
+    <button class="button secondary hidden" id="skipPracticeButton">View my results</button>
+  </section>
+
+  <section id="report" class="hidden">
+    <h2>Your Tutorial Results</h2>
+    <div class="callout">
+      <div class="score" id="finalScore"></div>
+      <div id="scoreDescription"></div>
+    </div>
+    <div id="practiceSummary"></div>
+    <h3>Concepts to review</h3>
+    <div id="reviewList"></div>
+    <h3>What to remember</h3>
+    <div class="callout">
+      <ul>
+        <li><strong>Positive reinforcement:</strong> Add something desirable; behavior increases.</li>
+        <li><strong>Negative reinforcement:</strong> Remove something unpleasant; behavior increases.</li>
+        <li><strong>Positive punishment:</strong> Add something unpleasant; behavior decreases.</li>
+        <li><strong>Negative punishment:</strong> Remove something desirable; behavior decreases.</li>
+      </ul>
+    </div>
+    <p class="small">Your answers are processed in this browser only. This tutorial does not collect or transmit student information.</p>
+    <button class="button" id="restartButton">Start over</button>
+  </section>
+</div>
+
+<script>
+const concepts = {
+  posNeg: "Positive vs. negative: whether something is added or removed",
+  reinPun: "Reinforcement vs. punishment: whether behavior increases or decreases",
+  effect: "Identifying the effect of a consequence on behavior",
+  perspective: "Perspective: whose behavior is being changed?"
+};
+
+const coreQuestions = [
+  {
+    q: "A teacher gives students a homework pass when they earn 100% on a quiz. Students begin studying more often because they want to earn the pass. What type of conditioning is this?",
+    a: [
+      ["Positive reinforcement", null],
+      ["Negative reinforcement", "posNeg"],
+      ["Positive punishment", "reinPun"],
+      ["Negative punishment", "effect"]
+    ], correct: 0,
+    why: "The teacher ADDS a desirable reward (a homework pass), and studying INCREASES. Adding something desirable to increase a behavior is positive reinforcement."
+  },
+  {
+    q: "A student dislikes staying after school to clean the classroom. The student begins completing assignments on time to avoid this extra responsibility. What type of conditioning is this?",
+    a: [
+      ["Positive punishment", "reinPun"],
+      ["Negative reinforcement", null],
+      ["Positive reinforcement", "posNeg"],
+      ["Negative punishment", "effect"]
+    ], correct: 1,
+    why: "The student avoids or removes something unpleasant (staying after school), and timely assignment completion INCREASES. Removing something unpleasant to increase a behavior is negative reinforcement."
+  },
+  {
+    q: "A teacher takes away a student's phone after catching the student using it during class. The student's phone use during class decreases. What type of conditioning is this?",
+    a: [
+      ["Positive punishment", "posNeg"],
+      ["Negative punishment", null],
+      ["Negative reinforcement", "reinPun"],
+      ["Positive reinforcement", "effect"]
+    ], correct: 1,
+    why: "The teacher REMOVES something desirable (the phone), and phone use DECREASES. Removing something desirable to decrease a behavior is negative punishment."
+  },
+  {
+    q: "A student repeatedly talks during instruction. The teacher assigns an additional classroom task, and the student's talking decreases. What type of conditioning is this?",
+    a: [
+      ["Negative punishment", "posNeg"],
+      ["Positive reinforcement", "reinPun"],
+      ["Positive punishment", null],
+      ["Negative reinforcement", "effect"]
+    ], correct: 2,
+    why: "The teacher ADDS an unpleasant consequence (an extra task), and talking DECREASES. Adding something unpleasant to decrease a behavior is positive punishment."
+  },
+  {
+    q: "A driver puts on a seatbelt to stop the car's annoying warning buzzer. Over time, the driver becomes more likely to buckle up immediately. What type of conditioning is this?",
+    a: [
+      ["Negative reinforcement", null],
+      ["Positive reinforcement", "posNeg"],
+      ["Negative punishment", "reinPun"],
+      ["Positive punishment", "effect"]
+    ], correct: 0,
+    why: "Buckling the seatbelt REMOVES an unpleasant sound, and buckling up INCREASES. This is negative reinforcement."
+  },
+  {
+    q: "A basketball coach praises a player after the player uses a correct defensive strategy. The player begins using that strategy more often. What type of conditioning is this?",
+    a: [
+      ["Positive punishment", "reinPun"],
+      ["Negative reinforcement", "posNeg"],
+      ["Negative punishment", "effect"],
+      ["Positive reinforcement", null]
+    ], correct: 3,
+    why: "The coach ADDS praise, and the desired defensive behavior INCREASES. This is positive reinforcement."
+  },
+  {
+    q: "A child throws a tantrum to avoid cleaning a bedroom. A parent eventually removes the cleaning demand, and the child's tantrums become more frequent. From the child's perspective, what type of conditioning is occurring?",
+    a: [
+      ["Positive punishment", "posNeg"],
+      ["Negative reinforcement", null],
+      ["Negative punishment", "reinPun"],
+      ["Positive reinforcement", "effect"]
+    ], correct: 1,
+    why: "From the CHILD'S perspective, the tantrum results in the removal of an unpleasant demand. Because tantrums INCREASE, this is negative reinforcement. Always consider whose behavior you are analyzing."
+  },
+  {
+    q: "A teenager argues with a parent about household rules. The parent takes away the teenager's weekly allowance, and the arguing decreases. What type of conditioning is this?",
+    a: [
+      ["Positive punishment", "posNeg"],
+      ["Negative reinforcement", "reinPun"],
+      ["Negative punishment", null],
+      ["Positive reinforcement", "effect"]
+    ], correct: 2,
+    why: "The parent REMOVES something desirable (allowance), and arguing DECREASES. This is negative punishment."
+  },
+  {
+    q: "A student studies regularly because doing so helps the student avoid being assigned mandatory after-school tutoring. The student's study habits increase. What type of conditioning is this?",
+    a: [
+      ["Negative reinforcement", null],
+      ["Positive reinforcement", "posNeg"],
+      ["Positive punishment", "reinPun"],
+      ["Negative punishment", "effect"]
+    ], correct: 0,
+    why: "Studying helps the student avoid or remove something unpleasant (mandatory tutoring), and studying INCREASES. This is negative reinforcement."
+  },
+  {
+    q: "A dog receives a treat every time it sits when its owner gives a command. The dog begins sitting more consistently. What type of conditioning is this?",
+    a: [
+      ["Negative punishment", "posNeg"],
+      ["Positive reinforcement", null],
+      ["Positive punishment", "reinPun"],
+      ["Negative reinforcement", "effect"]
+    ], correct: 1,
+    why: "The owner ADDS a desirable treat, and sitting INCREASES. This is positive reinforcement."
+  },
+  {
+    q: "A teacher assigns students an additional cleanup duty when they arrive late. Over time, students arrive late less often. What type of conditioning is this?",
+    a: [
+      ["Negative reinforcement", "posNeg"],
+      ["Negative punishment", "reinPun"],
+      ["Positive reinforcement", "effect"],
+      ["Positive punishment", null]
+    ], correct: 3,
+    why: "The teacher ADDS an unpleasant consequence (cleanup duty), and lateness DECREASES. This is positive punishment."
+  },
+  {
+    q: "A teacher stops assigning extra practice problems to students who consistently complete their homework on time. On-time homework completion increases. What type of conditioning is this?",
+    a: [
+      ["Positive reinforcement", "posNeg"],
+      ["Negative reinforcement", null],
+      ["Negative punishment", "reinPun"],
+      ["Positive punishment", "effect"]
+    ], correct: 1,
+    why: "The teacher REMOVES something unpleasant (extra practice problems), and on-time completion INCREASES. This is negative reinforcement."
+  },
+  {
+    q: "Parents frequently criticize a child for not helping with chores. When the child begins helping, the criticism stops. The child's helping behavior increases. What type of conditioning is this?",
+    a: [
+      ["Positive punishment", "reinPun"],
+      ["Negative punishment", "posNeg"],
+      ["Negative reinforcement", null],
+      ["Positive reinforcement", "effect"]
+    ], correct: 2,
+    why: "The parents REMOVE something unpleasant (criticism), and helping INCREASES. This is negative reinforcement."
+  },
+  {
+    q: "Which example best demonstrates negative punishment being used to decrease a teenager's phone use?",
+    a: [
+      ["A parent adds extra chores after phone misuse.", "posNeg"],
+      ["A parent removes free-time privileges after phone misuse.", null],
+      ["A parent gives a reward for putting the phone away.", "reinPun"],
+      ["A parent stops reminding the teenager to put the phone away.", "effect"]
+    ], correct: 1,
+    why: "Removing a desirable privilege to decrease phone use is negative punishment."
+  },
+  {
+    q: "Which intervention uses positive reinforcement to increase the likelihood that students turn in assignments on time?",
+    a: [
+      ["Taking away free time when assignments are late.", "posNeg"],
+      ["Adding an extra assignment when work is late.", "reinPun"],
+      ["Removing an unpleasant reminder when work is late.", "effect"],
+      ["Awarding bonus points for on-time submissions.", null]
+    ], correct: 3,
+    why: "Bonus points are ADDED after the desired behavior, and the goal is to INCREASE on-time submissions. This is positive reinforcement."
+  }
+];
+
+const practiceQuestions = [
+  {
+    q: "A teacher allows students to choose their preferred seats after they complete all assignments for the week. Students begin completing assignments more consistently. What type of conditioning is this?",
+    a: [
+      ["Negative reinforcement", "posNeg"],
+      ["Positive reinforcement", null],
+      ["Positive punishment", "reinPun"],
+      ["Negative punishment", "effect"]
+    ], correct: 1,
+    targets: ["posNeg", "reinPun"],
+    why: "The teacher ADDS access to a desirable seat choice, and assignment completion INCREASES. This is positive reinforcement."
+  },
+  {
+    q: "A person takes medication to eliminate a headache. Because the medication removes the unpleasant headache, the person becomes more likely to take the medication when a headache begins. What type of conditioning is this?",
+    a: [
+      ["Positive reinforcement", "posNeg"],
+      ["Positive punishment", "effect"],
+      ["Negative reinforcement", null],
+      ["Negative punishment", "reinPun"]
+    ], correct: 2,
+    targets: ["posNeg", "effect"],
+    why: "The medication removes something unpleasant (the headache), and taking the medication INCREASES. This is negative reinforcement."
+  },
+  {
+    q: "A coach makes athletes run extra laps when they skip practice. Skipping practice becomes less frequent. What type of conditioning is this?",
+    a: [
+      ["Negative reinforcement", "posNeg"],
+      ["Positive punishment", null],
+      ["Negative punishment", "reinPun"],
+      ["Positive reinforcement", "effect"]
+    ], correct: 1,
+    targets: ["effect", "reinPun"],
+    why: "Extra laps are ADDED, and skipping practice DECREASES. This is positive punishment."
+  },
+  {
+    q: "A teenager loses access to streaming services after missing curfew. The teenager begins returning home on time. What type of conditioning is this?",
+    a: [
+      ["Positive punishment", "posNeg"],
+      ["Negative reinforcement", "effect"],
+      ["Positive reinforcement", "reinPun"],
+      ["Negative punishment", null]
+    ], correct: 3,
+    targets: ["posNeg", "effect"],
+    why: "The parent REMOVES something desirable (streaming access), and missing curfew DECREASES. This is negative punishment."
+  },
+  {
+    q: "In operant conditioning, what does the word positive mean?",
+    a: [
+      ["A behavior increases.", "reinPun"],
+      ["A consequence is considered good.", "effect"],
+      ["Something is added to the situation.", null],
+      ["Something is removed from the situation.", "posNeg"]
+    ], correct: 2,
+    targets: ["posNeg"],
+    why: "Positive means something is added. It does not necessarily mean the consequence is pleasant or good."
+  },
+  {
+    q: "What is the most important difference between reinforcement and punishment?",
+    a: [
+      ["Reinforcement increases behavior; punishment decreases behavior.", null],
+      ["Reinforcement is positive; punishment is negative.", "posNeg"],
+      ["Reinforcement removes things; punishment adds things.", "effect"],
+      ["Reinforcement is intentional; punishment is accidental.", "reinPun"]
+    ], correct: 0,
+    targets: ["reinPun", "effect"],
+    why: "Reinforcement always increases the likelihood of a behavior. Punishment always decreases the likelihood of a behavior. Positive and negative describe adding or removing something."
+  },
+  {
+    q: "A student disrupts class and receives detention. The student's disruptions decrease. Why is this consequence considered punishment?",
+    a: [
+      ["Because detention is always negative.", "posNeg"],
+      ["Because the teacher intended to punish the student.", "effect"],
+      ["Because the student received something.", "reinPun"],
+      ["Because the disruptive behavior decreased.", null]
+    ], correct: 3,
+    targets: ["effect", "reinPun"],
+    why: "A consequence is classified as punishment because the behavior decreases—not simply because an adult intended it as punishment."
+  },
+  {
+    q: "A child refuses to put away toys. A parent eventually puts the toys away instead, and the child's refusal becomes more frequent. From the child's perspective, what type of conditioning is occurring?",
+    a: [
+      ["Positive reinforcement", "posNeg"],
+      ["Negative reinforcement", null],
+      ["Positive punishment", "reinPun"],
+      ["Negative punishment", "effect"]
+    ], correct: 1,
+    targets: ["perspective", "effect"],
+    why: "From the child's perspective, refusing results in the removal of an unpleasant demand (cleaning up). Because refusal INCREASES, this is negative reinforcement."
+  },
+  {
+    q: "A student receives bonus points for participating in extra-credit activities. The teacher later removes those bonus points when the student stops participating, and participation decreases. What type of conditioning is this?",
+    a: [
+      ["Positive punishment", "posNeg"],
+      ["Negative reinforcement", "reinPun"],
+      ["Negative punishment", null],
+      ["Positive reinforcement", "effect"]
+    ], correct: 2,
+    targets: ["reinPun", "effect"],
+    why: "The bonus points are REMOVED, and participation DECREASES. This is negative punishment."
+  },
+  {
+    q: "A teacher stops assigning an unpleasant warm-up activity to students who arrive on time. Students begin arriving on time more frequently. From the students' perspective, what type of conditioning is this?",
+    a: [
+      ["Positive reinforcement", "posNeg"],
+      ["Negative punishment", "reinPun"],
+      ["Positive punishment", "effect"],
+      ["Negative reinforcement", null]
+    ], correct: 3,
+    targets: ["perspective", "posNeg", "reinPun"],
+    why: "The students avoid or have something unpleasant removed (the warm-up), and punctuality INCREASES. This is negative reinforcement."
+  }
+];
+
+let phase = "core";
+let currentIndex = 0;
+let firstTryCorrect = 0;
+let coreRetries = 0;
+let practiceRetries = 0;
+let currentQuestion = null;
+let currentQuestionSolved = false;
+let firstAttemptMade = false;
+let errorCounts = {};
+let missedConcepts = new Set();
+let practicePool = [];
+let practiceSolved = 0;
+let coreSolved = 0;
+
+const $ = id => document.getElementById(id);
+
+function showSection(id) {
+  ["intro", "quiz", "transition", "report"].forEach(section => {
+    $(section).classList.toggle("hidden", section !== id);
+  });
+}
+
+function startTutorial() {
+  phase = "core";
+  currentIndex = 0;
+  firstTryCorrect = 0;
+  coreRetries = 0;
+  practiceRetries = 0;
+  errorCounts = {};
+  missedConcepts = new Set();
+  practicePool = [];
+  practiceSolved = 0;
+  coreSolved = 0;
+  showSection("quiz");
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const questions = phase === "core" ? coreQuestions : practicePool;
+  currentQuestion = questions[currentIndex];
+  currentQuestionSolved = false;
+  firstAttemptMade = false;
+
+  const total = questions.length;
+  const label = phase === "core" ? "Core questions" : "Targeted practice";
+  $("progressLabel").textContent = label + " — Question " + (currentIndex + 1) + " of " + total;
+  $("progressBar").style.width = ((currentIndex) / total * 100) + "%";
+  $("questionNumber").textContent = phase === "core"
+    ? "CORE QUESTION " + (currentIndex + 1)
+    : "TARGETED PRACTICE " + (currentIndex + 1);
+  $("questionText").textContent = currentQuestion.q;
+  $("feedback").style.display = "none";
+  $("feedback").className = "feedback";
+  $("nextButton").classList.add("hidden");
+
+  const options = $("options");
+  options.innerHTML = "";
+
+  currentQuestion.a.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.className = "option";
+    button.type = "button";
+    button.textContent = String.fromCharCode(65 + index) + ". " + answer[0];
+    button.addEventListener("click", () => chooseAnswer(index, button));
+    options.appendChild(button);
+  });
+}
+
+function chooseAnswer(index, button) {
+  if (currentQuestionSolved) return;
+
+  const buttons = Array.from($("options").children);
+  const feedback = $("feedback");
+  const isCorrect = index === currentQuestion.correct;
+
+  if (!firstAttemptMade) {
+    firstAttemptMade = true;
+    if (phase === "core" && isCorrect) firstTryCorrect++;
+  }
+
+  if (isCorrect) {
+    currentQuestionSolved = true;
+    if (phase === "core") coreSolved++;
+    else practiceSolved++;
+
+    buttons.forEach((b, i) => {
+      b.disabled = true;
+      if (i === currentQuestion.correct) b.classList.add("correct");
+    });
+
+    feedback.style.display = "block";
+    feedback.className = "feedback good";
+    feedback.innerHTML = "<h3>Correct!</h3><p>" + currentQuestion.why + "</p>";
+    $("nextButton").textContent =
+      currentIndex === (phase === "core" ? coreQuestions.length : practicePool.length) - 1
+      ? (phase === "core" ? "See my core results" : "Finish practice")
+      : "Continue";
+    $("nextButton").classList.remove("hidden");
+  } else {
+    if (phase === "core") coreRetries++;
+    else practiceRetries++;
+
+    const misconception = currentQuestion.a[index][1];
+    if (misconception) {
+      missedConcepts.add(misconception);
+      errorCounts[misconception] = (errorCounts[misconception] || 0) + 1;
+    }
+
+    button.disabled = true;
+    button.classList.add("incorrect");
+
+    feedback.style.display = "block";
+    feedback.className = "feedback try-again";
+
+    let message = "<h3>Not quite. Try again.</h3>";
+    if (misconception === "posNeg") {
+      message += "<p>Think about whether something was added or removed. Positive means added; negative means removed.</p>";
+    } else if (misconception === "reinPun") {
+      message += "<p>Think about what happened to the behavior. Reinforcement increases behavior; punishment decreases behavior.</p>";
+    } else if (misconception === "effect") {
+      message += "<p>Focus on the behavior itself. Did it become more frequent or less frequent?</p>";
+    } else if (misconception === "perspective") {
+      message += "<p>Consider whose behavior is being changed. Try analyzing the situation from the perspective of the person whose behavior the question asks about.</p>";
+    } else {
+      message += "<p>Review the difference between adding/removing something and increasing/decreasing a behavior.</p>";
+    }
+    message += "<p><strong>Try another answer.</strong></p>";
+    feedback.innerHTML = message;
+  }
+}
+
+function nextQuestion() {
+  const questions = phase === "core" ? coreQuestions : practicePool;
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else if (phase === "core") {
+    showCoreTransition();
+  } else {
+    showReport();
+  }
+}
+
+function showCoreTransition() {
+  $("progressBar").style.width = "100%";
+  const score = firstTryCorrect;
+  const percent = Math.round(score / coreQuestions.length * 100);
+  const mastered = score >= 12;
+
+  $("transitionTitle").textContent = mastered
+    ? "Nice work! You've reached the mastery goal."
+    : "Let's strengthen a few areas.";
+
+  $("transitionText").innerHTML =
+    "<div class='callout'><div class='score'>" + score + " / 15 (" + percent + "%)</div>" +
+    "<p>This score is based on your first answer to each core question.</p>" +
+    "<p>You eventually solved " + coreSolved + " of 15 questions.</p></div>" +
+    (mastered
+      ? "<p>You reached the 80% mastery goal. You can finish here or complete additional practice on concepts you missed.</p>"
+      : "<p>Your score is below the 80% mastery goal. Complete the targeted practice questions before viewing your final report.</p>");
+
+  const selected = selectPracticeQuestions();
+  practicePool = selected;
+  currentIndex = 0;
+
+  $("practiceButton").classList.toggle("hidden", selected.length === 0);
+  $("skipPracticeButton").classList.toggle("hidden", !mastered || selected.length === 0);
+
+  if (selected.length === 0) {
+    $("transitionText").innerHTML += "<p>You did not demonstrate a specific misconception requiring extra practice. You can view your results.</p>";
+    $("practiceButton").classList.add("hidden");
+    $("skipPracticeButton").classList.remove("hidden");
+  }
+
+  showSection("transition");
+}
+
+function selectPracticeQuestions() {
+  const selected = practiceQuestions.filter(q =>
+    q.targets.some(target => missedConcepts.has(target))
+  );
+  return selected;
+}
+
+function startPractice() {
+  if (!practicePool.length) {
+    showReport();
+    return;
+  }
+  phase = "practice";
+  currentIndex = 0;
+  showSection("quiz");
+  renderQuestion();
+}
+
+function showReport() {
+  showSection("report");
+  const percent = Math.round(firstTryCorrect / coreQuestions.length * 100);
+  $("finalScore").textContent = firstTryCorrect + " / 15 (" + percent + "%)";
+
+  $("scoreDescription").textContent = percent >= 80
+    ? "You met the 80% mastery goal on the core questions."
+    : "You did not yet reach the 80% mastery goal on the core questions. Review the concepts below.";
+
+  $("practiceSummary").innerHTML =
+    "<p><strong>Targeted practice:</strong> " + practiceSolved + " of " + practicePool.length + " completed correctly.</p>" +
+    "<p><strong>Core retries:</strong> " + coreRetries + " &nbsp; | &nbsp; <strong>Practice retries:</strong> " + practiceRetries + "</p>";
+
+  const list = $("reviewList");
+  list.innerHTML = "";
+  const conceptsToShow = Object.keys(concepts).filter(key => missedConcepts.has(key));
+
+  if (conceptsToShow.length === 0) {
+    list.innerHTML = "<div class='report-item'>No specific misconceptions were identified from your answers. Keep practicing all four types of operant conditioning.</div>";
+  } else {
+    conceptsToShow.forEach(key => {
+      const item = document.createElement("div");
+      item.className = "report-item";
+      item.innerHTML = "<strong>" + concepts[key] + "</strong><br><span class='small'>This was identified in " + (errorCounts[key] || 0) + " incorrect answer(s).</span>";
+      list.appendChild(item);
+    });
+  }
+}
+
+function restart() {
+  showSection("intro");
+  $("progressBar").style.width = "0%";
+}
+
+$("startButton").addEventListener("click", startTutorial);
+$("nextButton").addEventListener("click", nextQuestion);
+$("practiceButton").addEventListener("click", startPractice);
+$("skipPracticeButton").addEventListener("click", showReport);
+$("restartButton").addEventListener("click", restart);
+</script>
+</body>
+</html>
